@@ -1,5 +1,6 @@
 package com.example.testsecurityoauthsession20240610.service;
 
+import com.example.testsecurityoauthsession20240610.dto.CustomOAuth2User;
 import com.example.testsecurityoauthsession20240610.dto.GoogleResponse;
 import com.example.testsecurityoauthsession20240610.dto.NaverResponse;
 import com.example.testsecurityoauthsession20240610.dto.OAuth2Response;
@@ -34,6 +35,11 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
             return null;
         }
 
+
         // 나머지 구현 후 리턴 해주기
+
+        String role = "ROLE_USER";
+        // role 값의 겨우 social 로그인시 role 값이 없기 때문에 우리가 넣어 주어야 한다.
+        return new CustomOAuth2User(oAuth2Response, role);
     }
 }
