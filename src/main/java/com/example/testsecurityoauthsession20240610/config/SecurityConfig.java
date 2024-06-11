@@ -1,5 +1,6 @@
 package com.example.testsecurityoauthsession20240610.config;
 
+import com.example.testsecurityoauthsession20240610.oauth2.CustomClientRegistrationRepo;
 import com.example.testsecurityoauthsession20240610.service.CustomOAuth2UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -16,6 +17,8 @@ public class SecurityConfig {
 
     // 우리가 만든 OAuth2 요청을 생성자 주입 받아준다.
     private final CustomOAuth2UserService customOAuth2UserService;
+
+    private final CustomClientRegistrationRepo customClientRegistrationRepo;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -35,6 +38,7 @@ public class SecurityConfig {
         http
                 .oauth2Login((oauth2)-> oauth2
                         .loginPage("/login") // 커스텀 로그인 페이지 등록
+                        .clientRegistrationRepository(customClientRegistrationRepo.clientRegistrationRepository()) // 우리가 커스텀 하여 만든 OAuth 방식 작동 시키는 것 인식
                         .userInfoEndpoint((userInfoEndpointConfig) ->
                                 userInfoEndpointConfig.userService(customOAuth2UserService)));
 
